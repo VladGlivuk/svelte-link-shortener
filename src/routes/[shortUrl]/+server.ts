@@ -1,3 +1,4 @@
+import type { Link } from "$lib/types";
 import type { KVNamespace } from "@cloudflare/workers-types/experimental";
 import { redirect } from "@sveltejs/kit";
 import { getPlatformProxy } from "wrangler";
@@ -12,15 +13,18 @@ export async function GET({ params, request }) {
     const link = await kv.get(shortUrl);
 
     if (link) {
-        const data = JSON.parse(link);
+        const data = JSON.parse(link) as Link;
 
         data.clicks++;
+
         data.history.push({
             time: new Date().toISOString(),
             userAgent: request.headers.get('user-agent'),
             ip: request.headers.get('cf-connecting-ip'),
             geo: request.headers.get('cf-ipcountry')
         });
+
+        await kv.put(shortUrl, JSON.stringify(data));
 
         throw redirect(302, data.url);
     } else {

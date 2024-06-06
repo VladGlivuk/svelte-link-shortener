@@ -57,7 +57,7 @@
 </form>
 
 {#if success}
-	<p>Success! View your stats at /{shortUrl}/stats</p>
+	<p>Success! View your stats at <a data-sveltekit-preload-data="hover" href={`/${shortUrl}`}>/{shortUrl}/stats</a></p>
 {/if}
 
 {#if error}
