@@ -6,3 +6,5 @@ compatibility_date = "2024-06-05"
 binding = "linkshortener-LINKS"
 id = "8ca6490ecba042fb9e4d64b690c2bd78"
 
+[platformProxy]
+persist = './kv-storage'
