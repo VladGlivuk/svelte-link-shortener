@@ -29,12 +29,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each history as item}
+		{#each history as { time, userAgent, ip, geo }}
 			<tr>
-				<td>{item.time}</td>
-				<td>{item.userAgent}</td>
-				<td>{item.ip}</td>
-				<td>{item.geo}</td>
+				<td>{time}</td>
+				<td>{userAgent}</td>
+				<td>{ip}</td>
+				<td>{geo}</td>
 			</tr>
 		{/each}
 	</tbody>

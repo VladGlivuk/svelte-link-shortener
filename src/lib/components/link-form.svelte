@@ -29,6 +29,7 @@
     return ({ result, update }) => {
 				if (result.type === 'success') {
 					success = true;
+					error = "";
           result.data
 				} else if (result.type === 'failure') {
 					error = result?.data?.message;
@@ -57,7 +58,9 @@
 </form>
 
 {#if success}
-	<p>Success! View your stats at <a data-sveltekit-preload-data="hover" href={`/${shortUrl}`}>/{shortUrl}/stats</a></p>
+	<p>Success! Your shorten link: <a data-sveltekit-preload-data="hover" href={`/${shortUrl}`} target="_blank">{`${window.location.origin}/${shortUrl}`}</a>
+
+	View your stats at <a data-sveltekit-preload-data="hover" href={`/${shortUrl}/stats`}>/{shortUrl}/stats</a></p>
 {/if}
 
 {#if error}

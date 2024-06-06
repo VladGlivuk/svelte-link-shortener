@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-  type Link = {
+  type ListLink = {
     shortUrl: string;
     url: string;
   }
 
-	let links: Array<Link> = [];
+	let links: Array<ListLink> = [];
 
 	onMount(async () => {
 		const response = await fetch('/api/list');
@@ -16,7 +16,7 @@
 
 <h1>All Shortened URLs</h1>
 <ul>
-	{#each links as link}
-		<li><a href={`/${link.shortUrl}`}>{link.shortUrl}</a> -> {link.url}</li>
+	{#each links as {url, shortUrl}}
+		<li><a href={`/${shortUrl}`}>{shortUrl}</a> -> {url}</li>
 	{/each}
 </ul>
