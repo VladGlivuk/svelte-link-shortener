@@ -1,4 +1,8 @@
+import type { KVNamespace } from '@cloudflare/workers-types/experimental';
 import { fail, type Actions } from '@sveltejs/kit';
+import { getPlatformProxy } from "wrangler";
+
+const { env } = await getPlatformProxy();
 
 export const actions: Actions = {
   default: async ({ request }) => {
@@ -12,18 +16,17 @@ export const actions: Actions = {
       });
     }
 
-    // TODO uncomment when connect KV
-    // const existing = await LINKS.get(shortUrl);
-    // if (existing) {
-    //   return {
-    //     status: 400,
-    //     body: {
-    //       error: 'Short URL already exists'
-    //     }
-    //   };
-    // }
+    const kv = env["linkshortener-LINKS"] as KVNamespace;
 
-    // await LINKS.put(shortUrl, JSON.stringify({ url, clicks: 0, history: [] }));
+    const existing = await kv.get(shortUrl);
+
+    if (existing) {
+      return fail(400, {
+        message: "Short URL already exists.",
+      });
+    }
+
+    await kv.put(shortUrl, JSON.stringify({ url, clicks: 0, history: [] }));
 
     return {
       status: 200,
