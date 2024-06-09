@@ -1,6 +1,11 @@
 name = "linkshortener"
 type = "javascript"
+pages_build_output_dir = ".svelte-kit/cloudflare"
 compatibility_date = "2024-06-05"
+compatibility_flags = [ "nodejs_compat" ]
+
+account_id = 94a0ffb1f49c54d9f22b30a113005e92
+workers_dev = true
 
 [[kv_namespaces]]
 binding = "linkshortener-LINKS"
