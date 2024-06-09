@@ -1,11 +1,8 @@
 import type { KVNamespace } from '@cloudflare/workers-types/experimental';
 import { fail, type Actions } from '@sveltejs/kit';
-import { getPlatformProxy } from "wrangler";
-
-const { env } = await getPlatformProxy();
 
 export const actions: Actions = {
-  default: async ({ request }) => {
+  default: async ({ request, platform }) => {
     const formData = await request.formData();
     const url = formData.get('url') as string;
     const shortUrl = formData.get('shortUrl') as string;
@@ -16,7 +13,7 @@ export const actions: Actions = {
       });
     }
 
-    const kv = env["linkshortener-LINKS"] as KVNamespace;
+    const kv = platform?.env['linkshortener-LINKS'] as KVNamespace;
 
     const existing = await kv.get(shortUrl);
 

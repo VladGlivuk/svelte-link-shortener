@@ -1,11 +1,8 @@
-import type { KVNamespace } from '@cloudflare/workers-types/experimental';
-import { json } from '@sveltejs/kit';
-import { getPlatformProxy } from "wrangler";
+import type { KVNamespace } from "@cloudflare/workers-types/experimental";
+import { json } from "@sveltejs/kit";
 
-const { env } = await getPlatformProxy();
-
-export async function GET() {
-  const kv = env["linkshortener-LINKS"] as KVNamespace;
+export async function GET({ platform }) {
+  const kv = platform?.env['linkshortener-LINKS'] as KVNamespace;
 
   const allLinks = await kv.list()
 
