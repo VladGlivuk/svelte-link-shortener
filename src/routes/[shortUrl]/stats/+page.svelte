@@ -1,19 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-	import type { History } from '$lib/types';
+	import type { Stats } from '$lib/types';
 
-	let history: Array<History> = [];
-	let totalClicks = 0;
-	let shortUrl = $page.params.shortUrl;
-
-	onMount(async () => {
-		const response = await fetch(`/api/stats/${shortUrl}`);
-
-		const data = await response.json();
-		history = data.history;
-		totalClicks = data.clicks;
-	});
+	export let data: Stats;
+	const { history, shortUrl, totalClicks } = data;
 </script>
 
 <h1>Stats for {shortUrl}</h1>

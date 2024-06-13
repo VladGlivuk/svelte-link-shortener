@@ -2,7 +2,7 @@ import type { Link } from '$lib/types';
 import type { KVNamespace } from '@cloudflare/workers-types/experimental';
 import { redirect } from "@sveltejs/kit";
 
-export async function GET({ params, request, platform }) {
+export async function GET({ params, request, platform, getClientAddress }) {
     const shortUrl = params.shortUrl;
 
     const kv = platform?.env['linkshortener-LINKS'] as KVNamespace;
@@ -17,7 +17,7 @@ export async function GET({ params, request, platform }) {
         data.history.push({
             time: new Date().toISOString(),
             userAgent: request.headers.get('user-agent'),
-            ip: request.headers.get('cf-connecting-ip'),
+            ip: getClientAddress(),
             geo: request.headers.get('cf-ipcountry')
         });
 
